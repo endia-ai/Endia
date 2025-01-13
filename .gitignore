@@ -1,10 +1,5 @@
 .vscode/
-main.mojo
-setup_headers.py
-testl.mojo
-testl.py
-# pixi environments
-.pixi
-*.egg-info
+.DS_Store
 # magic environments
 .magic
+magic.lock

@@ -95,7 +95,7 @@ fn visualize_graph(arg: Array, filename: String = "computation_graph") raises:
     try:
         graphviz = Python.import_module("graphviz")
     except:
-        raise 'Error in graph vizualizer: Please install graphviz using "magic add --pypi "graphviz""'
+        raise "\nGraphviz not found while running examples. Please install graphviz via: \n\033[92m magic add --pypi \"graphviz\" \033[0m"
 
     var json = Python.import_module("json")
     var Digraph = graphviz.Digraph

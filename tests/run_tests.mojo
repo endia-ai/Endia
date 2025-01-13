@@ -195,7 +195,7 @@ def run_tests():
         _ = Python.import_module("torch")
 
     except:
-        raise "\033[91m[ERROR]\033[0m PyTorch not found. Skipping tests.\nIn order to use PyTorch please install it via:\n\033[92m magic project channel add \"pytorch\" && magic add pytorch \033[0m"
+        raise "\nPyTorch not found while running tests. In order to use PyTorch please install it via:\n\033[92m magic project channel add \"pytorch\" && magic add pytorch \033[0m"
 
     # run tests
     run_fft_tests()

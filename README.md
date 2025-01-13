@@ -20,11 +20,14 @@
 > ⚠️ ***Warning:** Endia is currently in an early development stage and not yet ready for production use. The API is subject to change without notice. Stay tuned for more exciting features to come (e.g. GPU support).*
 
 
-## Installation
+## Usage
 
-1. **Install [Mojo 24.6](https://docs.modular.com/mojo/manual/get-started) 🔥**
+Prerequisites:
+**Install [Mojo 24.6](https://docs.modular.com/mojo/manual/get-started) 🔥**
 
-2. **Add the Endia Package** (at the top level of your project):
+### Option 1: Install the pure Endia Package (endia.📦) for usage in another project
+
+   **Add the Endia Package** (at the top level of your project):
 
     ```bash
     curl -o "endia.📦" https://raw.githubusercontent.com/endia-org/Endia/main/endia.mojopkg
@@ -33,6 +36,22 @@
     > *But what about **all the other internal dependencies**? - Good news, **there are none**. The core of Endia is built [purely on top of Mojo and MAX](#why-another-ml-framework)!*
 
     <!-- > *<span style="color: green;">**Note:**</span> In the near future, you will be able to simply call `magic add endia`, which will manage this dependency in your project's environment automatically. QOL is in sight!* -->
+
+### Option 2: Clone the Endia Repository and run the examples, tests and benchmarks
+1. **Clone the Repository**
+
+    ```bash
+    git clone https://github.com/endia-ai/Endia.git
+    cd Endia
+    magic shell
+    ```
+3. **Run the Examples, Tests and Benchmarks**
+    Go to the `run_all.mojo` file and adjust the execution.
+
+    ```bash
+    mojo run_all.mojo
+    ```
+
 
 ####
 

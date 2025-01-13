@@ -19,14 +19,6 @@ from python import Python
 
 
 def run_examples():
-    # check if Graphviz is installed
-    try:
-        _ = Python.import_module("graphviz")
-
-    except:
-        raise "\033[91m[ERROR]\033[0m Graphviz not found. Please install graphviz to run the examples via: \n\033[92m magic add --pypi \"graphviz\" \033[0m"
-
-    # run examples
     example1()
     example2()
     viz_example1()
