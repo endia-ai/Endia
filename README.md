@@ -19,33 +19,35 @@
 
 ## Usage
 
-Prerequisites: [Mojo 24.6](https://docs.modular.com/mojo/manual/get-started) 🔥
+**Prerequisites: [Mojo 24.6](https://docs.modular.com/mojo/manual/get-started) 🔥**
 
-### Option 1: Install the pure Endia Package for usage in another project
+### Option 1: Install the Endia Package for usage in your project
+- **Add the Endia Package to your project**
 
-   Add the Endia Package at the top level of your project:
-
-    ```bash
-    curl -o "endia.📦" https://raw.githubusercontent.com/endia-org/Endia/main/endia.mojopkg
+    ```shell
+    curl -o "endia.📦" https://raw.githubusercontent.com/endia-ai/Endia/main/endia.mojopkg
     ```
 
     > *But what about **all the other internal dependencies**? - Good news, **there are none**. The core of Endia is built [purely on top of Mojo and MAX](#why-another-ml-framework)!*
 
-### Option 2: Clone the Endia Repository and run the examples, tests and benchmarks
-1. **Clone the Repository**
 
-    ```bash
+
+### Option 2: Clone the Endia Repository and run the examples, tests and benchmarks
+
+- **Clone the Repository**
+
+    ```shell
     git clone https://github.com/endia-ai/Endia.git
     cd Endia
     magic shell
     ```
 
-3. **Run the Examples, Tests and Benchmarks**
+- **Run the Examples, Tests and Benchmarks**
     Go to the `run_all.mojo` file and adjust the execution.
 
-    ```bash
+    ```shell
     mojo run_all.mojo
-    ```
+    ````
 
 ####
 
@@ -139,7 +141,7 @@ Guided by this core belief, we embarked on a challenging journey to build someth
 
 ## Contributing
 
-Contributions to Endia are welcome! If you'd like to contribute, please follow the contribution guidelines in the [CONTRIBUTING.md](https://github.com/endia-org/Endia/blob/main/CONTRIBUTING.md) file in the repository.
+Contributions to Endia are welcome! If you'd like to contribute, please follow the contribution guidelines in the [CONTRIBUTING.md](https://github.com/endia-ai/Endia/blob/main/CONTRIBUTING.md) file in the repository.
 
 ## Citation
 
@@ -160,7 +162,7 @@ If you use Endia in your research or project, please cite it as follows:
 
 ## License
 
-Endia is licensed under the [Apache-2.0 license with LLVM Exeptions](https://github.com/endia-org/Endia/blob/main/LICENSE).
+Endia is licensed under the [Apache-2.0 license with LLVM Exeptions](https://github.com/endia-ai/Endia/blob/main/LICENSE).
 
 ## Happy Coding! 🚀
 

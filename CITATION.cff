@@ -8,12 +8,12 @@ title: "Endia"
 version: 24.6.0
 doi: "10.5281/zenodo.12810766"
 date-released: 2025-01-13
-url: "https://github.com/endia-org/Endia"
+url: "https://github.com/endia-ai/Endia"
 license: Apache-2.0 with LLVM-exception
 keywords:
   - "scientific computing"
   - "Mojo"
   - "compiler"
   - "machine learning"
-repository-code: "https://github.com/endia-org/Endia"
+repository-code: "https://github.com/endia-ai/Endia"
 abstract: "Endia is an open-source project for scientific computing in Mojo, facilitating the development of dynamic Machine Learning workflows."

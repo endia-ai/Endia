@@ -16,13 +16,13 @@ From forgotten handwritings by Gauss in the early 1800s, through a rediscovery i
 
 This module provides a suite of optimized, non-recursive Fast Fourier Transform (FFT) implementations based on the [Cooley-Tukey algorithm](https://en.wikipedia.org/wiki/Cooley%E2%80%93Tukey_FFT_algorithm), featuring parallel processing and efficient multi-dimensional operations. 🏛️
 
-- [utils.mojo](https://github.com/endia-org/Endia/blob/nightly/endia/functional/fft_ops/utils.mojo)
+- [utils.mojo](https://github.com/endia-ai/Endia/blob/nightly/endia/functional/fft_ops/utils.mojo)
   - Functions for data buffer manipulation
   - Bit reversal operations
   - Encoding/decoding of runtime parameters
   - Trait for differentiable FFT operations
 
-- [fft_cooley_tukey.mojo](https://github.com/endia-org/Endia/blob/nightly/endia/functional/fft_ops/fft_cooley_tukey.mojo)
+- [fft_cooley_tukey.mojo](https://github.com/endia-ai/Endia/blob/nightly/endia/functional/fft_ops/fft_cooley_tukey.mojo)
   - Three iterative versions of Cooley-Tukey FFT algorithm for 1-dimensional inputs:
     1. **cooley_tukey_non_recursive:** Mimics divide-and-conquer logic without recursion creating independent parallelizable subtasks
     2. **fft_cooley_tukey_inplace_bit_reversal:** Iterative Bit-reversal implementation of Cooley-Tukey
@@ -31,7 +31,7 @@ This module provides a suite of optimized, non-recursive Fast Fourier Transform 
        - Applies parallel bit-reversal Cooley-Tukey algorithm on subtasks
   - Enables efficient parallelization and improved performance
 
-- [fftn.mojo](https://github.com/endia-org/Endia/blob/nightly/endia/functional/fft_ops/fftn_op.mojo) and [ifftn.mojo](https://github.com/endia-org/Endia/blob/nightly/endia/functional/fft_ops/ifftn_op.mojo)
+- [fftn.mojo](https://github.com/endia-ai/Endia/blob/nightly/endia/functional/fft_ops/fftn_op.mojo) and [ifftn.mojo](https://github.com/endia-ai/Endia/blob/nightly/endia/functional/fft_ops/ifftn_op.mojo)
   - Multi-dimensional FFT and Inverse FFT operations
   - Use parallelizable **fft_cooley_tukey_parallel** algorithm
   - IFFT conjugates input/output and scales output
@@ -41,7 +41,7 @@ This module provides a suite of optimized, non-recursive Fast Fourier Transform 
     - Requires k calls of parallel FFT function for k dimensions of n-dimensional array
 
 - Other FFT operations
-  - [fft](https://github.com/endia-org/Endia/blob/nightly/endia/functional/fft_ops/fft_op.mojo), [ifft](https://github.com/endia-org/Endia/blob/nightly/endia/functional/fft_ops/ifft_op.mojo), [fft2](https://github.com/endia-org/Endia/blob/nightly/endia/functional/fft_ops/fft2_op.mojo), [ifft2](https://github.com/endia-org/Endia/blob/nightly/endia/functional/fft_ops/ifft2_op.mojo)
+  - [fft](https://github.com/endia-ai/Endia/blob/nightly/endia/functional/fft_ops/fft_op.mojo), [ifft](https://github.com/endia-ai/Endia/blob/nightly/endia/functional/fft_ops/ifft_op.mojo), [fft2](https://github.com/endia-ai/Endia/blob/nightly/endia/functional/fft_ops/fft2_op.mojo), [ifft2](https://github.com/endia-ai/Endia/blob/nightly/endia/functional/fft_ops/ifft2_op.mojo)
   - Specialized cases of fftn and ifftn operations
 
 

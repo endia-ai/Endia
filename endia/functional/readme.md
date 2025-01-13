@@ -122,6 +122,6 @@ Congratulations! You've created a custom differentiable operation in Endia. This
 
 ## But there is more...
 
-You can read through the [actual imeplementations the built-in mul operation](https://github.com/endia-org/Endia/blob/main/endia/functional/binary_ops/mul_op.mojo) and you will see that they are implemented in a similar way, but with proper broadcasting capabilities, and a lot of optimizations for performance.
+You can read through the [actual imeplementations the built-in mul operation](https://github.com/endia-ai/Endia/blob/main/endia/functional/binary_ops/mul_op.mojo) and you will see that they are implemented in a similar way, but with proper broadcasting capabilities, and a lot of optimizations for performance.
 
 In the above guide we mainly focused on doing reverse-mode automatic differentiation. However, Endia will soon also support forward-mode automatic differentiation, where the notion of the vector-Jacobian product is replaced by the Jacobian-vector product. **_Stay tuned!_**
