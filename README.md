@@ -1,4 +1,4 @@
-# Welcome to Endia 24.6.0
+# Welcome to Endia 24.6
 
 **Endia** is a general-purpose scientific computing library, featuring:
 
@@ -43,11 +43,12 @@
     ```
 
 - **Run the Examples, Tests and Benchmarks**
-    Go to the `run_all.mojo` file and adjust the execution.
 
     ```shell
     mojo run_all.mojo
     ````
+
+    Recommended: Go to the `run_all.mojo` file and adjust the execution to your liking.
 
 ####
 
