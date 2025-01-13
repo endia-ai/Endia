@@ -59,7 +59,7 @@ struct ArraySlice(DifferentiableViewOp):
             )
             slice.start = (
                 max(0, slice.start.value())
-                % (arg.shape_node[].shape[i] + 1) if slice.step
+                % (arg.shape_node[].shape[i] + 1) if slice.step.value()
                 > 0 else min(
                     arg.shape_node[].shape[i],
                     slice.end.value() % (arg.shape_node[].shape[i] + 1),
@@ -68,14 +68,14 @@ struct ArraySlice(DifferentiableViewOp):
             )
             slice.end = (
                 min(arg.shape_node[].shape[i], slice.end.value())
-                % (arg.shape_node[].shape[i] + 1) if slice.step
+                % (arg.shape_node[].shape[i] + 1) if slice.step.value()
                 > 0 else max(0, slice.start.value()) - 1
             )
             sliced_shape.append(
-                (slice.end.value() - slice.start.value() + slice.step - 1)
-                // slice.step
+                (slice.end.value() - slice.start.value() + slice.step.value() - 1)
+                // slice.step.value()
             )
-            sliced_stride.append(arg.shape_node[].stride[i] * slice.step)
+            sliced_stride.append(arg.shape_node[].stride[i] * slice.step.value())
             storage_offset += slice.start.value() * arg.shape_node[].stride[i]
 
         curr.setup(sliced_shape, sliced_stride, storage_offset)

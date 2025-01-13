@@ -66,7 +66,7 @@ fn tensor_to_array(owned src: Tensor[dtype]) raises -> Array:
     var shape = List[Int]()
     for i in range(src.rank()):
         shape.append(src.shape()[i])
-    var dst = Array(shape, is_view=True)
+    var dst = Array(ArrayShape(shape), is_view=True)
     dst.data_(src._steal_ptr())
     dst.is_view_(False)
     return dst

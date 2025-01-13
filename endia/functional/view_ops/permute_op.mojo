@@ -192,7 +192,7 @@ fn transpose(arg0: Array, axis1: Int, axis2: Int) raises -> Array:
             axis.append(axis1)
         else:
             axis.append(i)
-    return permute(arg0, axis)
+    return permute(arg0, ArrayShape(axis))
 
 
 fn swapaxes(arg0: Array, axis1: Int, axis2: Int) raises -> Array:
