@@ -32,7 +32,7 @@
 
 
 
-### Option 2: Clone the Endia Repository and run the examples, tests and benchmarks
+### Option 2: Clone the Repository and run all examples, tests and benchmarks
 
 - **Clone the Repository**
 
