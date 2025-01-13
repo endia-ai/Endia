@@ -168,3 +168,7 @@ Endia is licensed under the [Apache-2.0 license with LLVM Exeptions](https://git
 <div align="center" style="max-width: 1000px; margin: auto;">
   <img src="./assets/title_image.png" alt="Endia Title Image" style="max-width: 100%;" />
 </div>
+
+### 
+
+![CodeQL](https://github.com/endia-ai/Endia/workflows/CodeQL/badge.svg)
