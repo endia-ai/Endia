@@ -21,8 +21,8 @@
 
 **Prerequisites: [Mojo 24.6](https://docs.modular.com/mojo/manual/get-started) 🔥**
 
-### Option 1: Install the Endia Package for usage in your project
-- **Add the Endia Package to your project**
+### Option 1: Install the package for usage in your project
+- **Add the Endia Package at the top level of your project:**
 
     ```shell
     curl -o "endia.📦" https://raw.githubusercontent.com/endia-ai/Endia/main/endia.mojopkg
@@ -32,7 +32,7 @@
 
 
 
-### Option 2: Clone the Repository and run all examples, tests and benchmarks
+### Option 2: Clone the repository and run all examples, tests and benchmarks
 
 - **Clone the Repository**
 
