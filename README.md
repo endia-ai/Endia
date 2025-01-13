@@ -1,13 +1,13 @@
 # Welcome to Endia 24.6
 
-**Endia** is a general-purpose scientific computing library, featuring:
+**Endia** is a dynamic Machine Learning Library, featuring:
 
-- **Automatic differentiation**: Compute derivatives of arbitrary order.
-- **Complex numbers:** Use Endia for advanced scientific applications.
+- **Algorithmic Differentiation**: Compute derivatives of arbitrary order for training Neural Networks and beyond.
+- **Signal Processing:** Complex Numbers, Fourier Transforms, Convolution, and more.
+- **JIT Compilation:** Leverage the [MAX Engine](https://www.modular.com/) to speed up your code.
 - **Dual API:** Choose between a PyTorch-like imperative or a JAX-like functional interface.
-- **JIT Compilation:** Leverage [MAX](https://www.modular.com/) to speed up training and inference.
 
-<div align="center">
+<!-- <div align="center">
   
   [Website] | [Docs] | [Getting Started]
 
@@ -15,7 +15,9 @@
   [Docs]: https://endia.vercel.app/docs/array
   [Getting Started]: https://endia.vercel.app/docs/get_started
 
-</div>
+</div> -->
+
+Checkout the [Endia documentation](https://endia.vercel.app/docs/array) for more information.
 
 ## Usage
 
@@ -28,7 +30,7 @@
     curl -o "endia.📦" https://raw.githubusercontent.com/endia-ai/Endia/main/endia.mojopkg
     ```
 
-    > *But what about **all the other internal dependencies**? - Good news, **there are none**. The core of Endia is built [purely on top of Mojo and MAX](#why-another-ml-framework)!*
+    <!-- > *But what about **all the other internal dependencies**? - Good news, **there are none**. The core of Endia is built [purely on top of Mojo and MAX](#why-another-ml-framework)!* -->
 
 
 
@@ -52,7 +54,7 @@
 
 ####
 
-## A tiny example
+## A Simple Example - Computing Derivatives
 
 In this guide, we'll demonstrate how to compute the **value**, **gradient**, and the **Hessian** (i.e. the second-order derivative) of a simple function. First by using Endia's Pytorch-like API and then by using a more Jax-like functional API. In both examples, we initially define a function **foo** that takes an array and returns the sum of the squares of its elements.
 
@@ -125,20 +127,16 @@ def main():
 ```
 
 *And there is so much more! Endia can handle complex valued functions, can perform both forward and reverse-mode automatic differentiation, it even has a builtin JIT compiler to make things go brrr. Explore the full **list of features** in the [documentation](https://endia.org).*
-
-## Why another ML framework?
 <!-- 
-- 🧠 **Advance AI & Scientific Computing:** Push boundaries with clear and understandable algorithms
-- 🚀 **Mojo-Powered Clarity:** High-performance open-source code that remains readable and pythonic through and through
-- 📐 **Explainability:** Prioritize clarity and educational value over exhaustive features -->
+## Why another ML framework?
 
 *"Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less."* - Marie Curie
 
-Guided by this core belief, we embarked on a challenging journey to build something from first principles — a framework that is both powerful 🚀 and transparent 📐. Endia is crafted to be more than just a tool; it's a window into the algorithms you work with, stripping away layers of abstraction to reveal the underlying logic 🧠. In contrast to other popular Scientific Computing libraries which are built on piles of decades-old legacy Fortran and C++ code (like NumPy, for example), Endia is built on top of a uniquely minimalistic stack:
+Guided by this core belief, we embarked on a challenging journey to build something from first principles — a framework that is both powerful 🚀 and transparent 📐. Endia is crafted to be more than just a tool; it's a window into the algorithms you work with, stripping away layers of abstraction to reveal the underlying logic 🧠. In contrast to other popular Scientific Computing libraries which are built on piles of decades-old legacy Fortran and C++ code (like NumPy, for example), Endia is built on top of a uniquely minimalistic stack: -->
 
-<div align="center" style="max-width: 600px; margin: auto;">
+<!-- <div align="center" style="max-width: 600px; margin: auto;">
   <img src="./assets/endia_stack_concept.png" alt="Endia Stack concept Image" style="max-width: 100%;" />
-</div>
+</div> -->
 
 ## Contributing
 
