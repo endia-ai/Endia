@@ -23,7 +23,7 @@ def run_test_expand(msg: String = "expand"):
     shape = List(2, 2, 30, 40)
     shape_torch = [2, 2, 30, 40]
 
-    res = nd.expand(arr, shape)
+    res = nd.expand(arr, nd.ArrayShape(shape))
     res_torch = torch.broadcast_to(arr_torch, shape_torch)
 
     if not nd.utils.is_close(res, res_torch):
@@ -37,7 +37,7 @@ def run_test_expand_grad(msg: String = "expand_grad"):
     arr = nd.arange(0, 2 * 30 * 1, requires_grad=True).reshape(List(2, 30, 1))
     arr_torch = nd.utils.to_torch(arr)
 
-    res = nd.sum(nd.sin(nd.expand(arr, List(2, 30, 40))))
+    res = nd.sum(nd.sin(nd.expand(arr, nd.ArrayShape(List(2, 30, 40)))))
     res_torch = torch.sum(torch.sin(arr_torch.broadcast_to((2, 30, 40))))
 
     res.backward()

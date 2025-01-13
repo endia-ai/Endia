@@ -13,7 +13,7 @@
 
 import endia as nd
 from python import Python
-from time import now
+from time import perf_counter
 
 
 def foo(args: List[nd.Array]) -> nd.Array:
@@ -48,14 +48,14 @@ def benchmark_foo_grad(
     total_time_forward = 0
     total_time_backward = 0
     for _ in range(num_runs):
-        start = now()
+        start = perf_counter()
         res = foo(args)
-        end = now()
+        end = perf_counter()
 
         # backward pass
-        start2 = now()
+        start2 = perf_counter()
         res.backward()
-        end2 = now()
+        end2 = perf_counter()
 
         # zero the gradients in the computation graph
         res.zero_grad()

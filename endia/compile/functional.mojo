@@ -24,7 +24,7 @@ from compile import *
 #       the operation that is expected, based on what has happened in an earlier capture of the function.
 #       If both names match, we return immediately and postpone our execution, if not equal, we brach and
 #       mark this potential different path at the curr_idx. The operations of the unexpected/new trace is
-#       are added at the end of the trace of the graph. That way, over time, the Graph will know about all
+#       are added at the end of the trace of the graph. That way, over time, the Graph will kperf_counter about all
 #       possible branches, while still storing/caching previous traces.
 #    2) So far we have a graph with different branches. However the purpose of the graph capturing is to
 #       optimize subgraphs of the computation, i.e. cache optimized subgraphs and call then when they are
@@ -35,7 +35,7 @@ from compile import *
 #       via a getter or setter, this breakpoint marks an end to a subgraph in the Graph. Everytime we come
 #       across a breakpoint node, we look at the current subgraph which emerged thorugh the last
 #       couple of operations and try to fuse elemtwise ops together and perform general optimizations on this
-#       now static and cached computation graph. If we come across this breakpoint node again in another
+#       perf_counter static and cached computation graph. If we come across this breakpoint node again in another
 #       execution of the outer function, we simply call this optimized subgraph and we are done.
 ###############################################################################################################
 

@@ -20,7 +20,7 @@ def run_test_permute(msg: String = "permute"):
     arr = nd.randn(List(2, 30, 40))
     arr_torch = nd.utils.to_torch(arr)
 
-    res = nd.permute(arr, List(2, 0, 1))
+    res = nd.permute(arr, nd.ArrayShape(List(2, 0, 1)))
     res_torch = torch.permute(arr_torch, dims=(2, 0, 1))
 
     if not nd.utils.is_close(res, res_torch):
@@ -34,7 +34,7 @@ def run_test_permute_grad(msg: String = "permute_grad"):
     arr = nd.randn(List(2, 30, 40), requires_grad=True)
     arr_torch = nd.utils.to_torch(arr)
 
-    res = nd.sum((nd.permute(arr, List(2, 0, 1))))
+    res = nd.sum((nd.permute(arr, nd.ArrayShape(List(2, 0, 1)))))
     res_torch = torch.sum((arr_torch.permute(2, 0, 1)))
 
     res.backward()

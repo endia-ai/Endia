@@ -1,0 +1,12 @@
+[project]
+authors = ["TilliFe <tillmann.fehrenbach@gmail.com>"]
+channels = ["conda-forge", "https://conda.modular.com/max"]
+description = "Scientific Computing in Mojo"
+name = "Endia"
+platforms = ["osx-arm64"]
+version = "24.6"
+
+[tasks]
+
+[dependencies]
+max = ">=24.6.0,<25"

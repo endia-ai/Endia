@@ -41,13 +41,13 @@ def ifft_benchmark():
                 total = 0
                 total_torch = 0
 
-            start = now()
+            start = perf_counter()
             _ = nd.ifft(x)
-            total += now() - start
+            total += perf_counter() - start
 
-            start = now()
+            start = perf_counter()
             _ = torch.fft.ifft(x_torch)
-            total_torch += now() - start
+            total_torch += perf_counter() - start
 
         my_time = total / (1000000000 * num_iterations)
         torch_time = total_torch / (1000000000 * num_iterations)

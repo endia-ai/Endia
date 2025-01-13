@@ -121,7 +121,7 @@ struct ReduceAdd(DifferentiableReduceOp):
                                 rank - 1
                             ]
                             if is_complex:
-                                curr_data.store[width = 2 * width](
+                                curr_data.store(
                                     2 * target_idx,
                                     curr_data.load[width = 2 * width](
                                         2 * target_idx
@@ -130,12 +130,22 @@ struct ReduceAdd(DifferentiableReduceOp):
                                         2 * base_idx
                                     ),
                                 )
+                                # curr_data.offset(2 * target_idx).strided_store[width=2 * width](
+                                #     curr_data.load[width=2 * width](2 * target_idx)
+                                #     + arg_data.load[width=2 * width](2 * base_idx),
+                                #     stride=1,
+                                # )   
                             else:
-                                curr_data.store[width=width](
+                                curr_data.store(
                                     target_idx,
                                     curr_data.load[width=width](target_idx)
                                     + arg_data.load[width=width](base_idx),
                                 )
+                                # curr_data.offset(target_idx).strided_store[width=width](
+                                #     curr_data.load[width=width](target_idx)
+                                #     + arg_data.load[width=width](base_idx),
+                                #     stride=1,
+                                # )
 
                         vectorize[reduce_v, nelts[dtype]()](cols)
 
@@ -146,10 +156,15 @@ struct ReduceAdd(DifferentiableReduceOp):
                                 rank - 1
                             ]
                             if is_complex:
-                                curr_data.store[width=2](
-                                    2 * target_idx,
+                                # curr_data.store[width=2](
+                                #     2 * target_idx,
+                                #     curr_data.load[width=2](2 * target_idx)
+                                #     + arg_data.load[width=2](2 * base_idx),
+                                # )
+                                curr_data.offset(2 * target_idx).strided_store[width=2](
                                     curr_data.load[width=2](2 * target_idx)
                                     + arg_data.load[width=2](2 * base_idx),
+                                    stride=1,
                                 )
                             else:
                                 curr_data.store(
@@ -184,7 +199,7 @@ struct ReduceAdd(DifferentiableReduceOp):
                         )
                 for i in range(end, arg.size()):
                     if is_complex:
-                        curr.store[width=2](
+                        curr.store(
                             0,
                             curr_data.load[width=2](0)
                             + arg_data.load[width=2](2 * i),
@@ -197,13 +212,21 @@ struct ReduceAdd(DifferentiableReduceOp):
                 var end = arg.size() - arg.size() % nelts[dtype]()
                 for i in range(0, end, nelts[dtype]()):
                     if is_complex:
-                        curr_data.store[width = 2 * nelts[dtype]()](
+                        curr_data.store(
                             i, arg_data.load[width = 2 * nelts[dtype]()](2 * i)
                         )
+                        # curr_data.offset(i).strided_store[width=2 * nelts[dtype]() ](
+                        #     arg_data.load[width=2 * nelts[dtype]() ](2 * i),
+                        #     stride=1,
+                        # )
                     else:
-                        curr_data.store[width = nelts[dtype]()](
+                        curr_data.store(
                             i, arg_data.load[width = nelts[dtype]()](i)
                         )
+                        # curr_data.offset(i).strided_store[width=nelts[dtype]() ](
+                        #     arg_data.load[width=nelts[dtype]() ](i),
+                        #     stride=1,
+                        # )
                 for i in range(end, arg.size()):
                     curr_data.store(i, arg_data.load(i))
 

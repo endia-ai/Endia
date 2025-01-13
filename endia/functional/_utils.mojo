@@ -117,11 +117,15 @@ fn execute_copy_raw[
                     @parameter
                     fn copy_v_complex[simd_width: Int](j: Int):
                         var j_idx = i_idx + j * stride[rank - 1]
-                        dest_data.store[width = 2 * simd_width](
-                            flat_idx * 2,
-                            source_data.load[width = 2 * simd_width](
-                                j_idx * 2
-                            ).cast[dst_dtype](),
+                        # dest_data.store[width = 2 * simd_width](
+                        #     flat_idx * 2,
+                        #     source_data.load[width = 2 * simd_width](
+                        #         j_idx * 2
+                        #     ).cast[dst_dtype](),
+                        # )
+                        dest_data.offset(flat_idx * 2).strided_store[width = 2 * simd_width](
+                            source_data.load[width = 2 * simd_width](j_idx * 2).cast[dst_dtype](),
+                            stride=1
                         )
                         flat_idx += simd_width
 
@@ -145,12 +149,16 @@ fn execute_copy_raw[
                     @parameter
                     fn copy_v[simd_width: Int](j: Int):
                         var j_idx = i_idx + j * stride[rank - 1]
-                        dest_data.store[width=simd_width](
+                        dest_data.store(
                             flat_idx,
                             source_data.load[width=simd_width](j_idx).cast[
                                 dst_dtype
                             ](),
                         )
+                        # dest_data.offset(flat_idx).strided_store[width=simd_width](
+                        #     source_data.load[width=simd_width](j_idx).cast[dst_dtype](),
+                        #     stride=1
+                        # )
                         flat_idx += simd_width
 
                     vectorize[copy_v, nelts[dtype]()](cols)

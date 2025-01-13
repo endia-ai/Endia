@@ -60,7 +60,7 @@ fn bit_reversal(
         if i < n:
             var to_store = reversed.cast[DType.uint32]()
             if i + 15 < n:
-                reordered_arr_data.store[width = nd.nelts[DType.uint32]()](
+                reordered_arr_data.store(
                     i, to_store
                 )
             else:
@@ -85,7 +85,7 @@ fn copy_complex_and_cast[
 
         @parameter
         fn do_copy_with_div[simd_width: Int](i: Int):
-            dst.store[width = 2 * simd_width](
+            dst.store(
                 2 * i,
                 src.load[width = 2 * simd_width](2 * i).cast[dst_type]()
                 / divisor,
@@ -99,7 +99,7 @@ fn copy_complex_and_cast[
 
         @parameter
         fn do_copy[simd_width: Int](i: Int):
-            dst.store[width = 2 * simd_width](
+            dst.store(
                 2 * i, src.load[width = 2 * simd_width](2 * i).cast[dst_type]()
             )
 

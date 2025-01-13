@@ -134,13 +134,13 @@ struct ReduceMul(DifferentiableReduceOp):
                                 var d_imag = d[1]
                                 var res_real = curr_real * d_real - curr_imag * d_imag
                                 var res_imag = curr_real * d_imag + curr_imag * d_real
-                                curr_data.store[width = 2 * (2 * width // 2)](
+                                curr_data.store(
                                     2 * target_idx,
                                     res_real.interleave(res_imag),
                                 )
 
                             else:
-                                curr_data.store[width=width](
+                                curr_data.store(
                                     target_idx,
                                     curr_data.load[width=width](target_idx)
                                     * arg_data.load[width=width](base_idx),
@@ -190,7 +190,7 @@ struct ReduceMul(DifferentiableReduceOp):
                         var res_imag = curr_data.load(0) * d[
                             1
                         ].reduce_mul() + curr_data.load(1) * d[0].reduce_mul()
-                        curr_data.store[width=2](
+                        curr_data.store(
                             0, SIMD[dtype, 2](res_real, res_imag)
                         )
                     else:
@@ -218,11 +218,11 @@ struct ReduceMul(DifferentiableReduceOp):
                 var end = arg.size() - arg.size() % nelts[dtype]()
                 for i in range(0, end, nelts[dtype]()):
                     if is_complex:
-                        curr_data.store[width = 2 * nelts[dtype]()](
+                        curr_data.store(
                             i, arg_data.load[width = 2 * nelts[dtype]()](2 * i)
                         )
                     else:
-                        curr_data.store[width = nelts[dtype]()](
+                        curr_data.store(
                             i, arg_data.load[width = nelts[dtype]()](i)
                         )
                 for i in range(end, arg.size()):

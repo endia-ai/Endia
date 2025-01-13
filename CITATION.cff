@@ -5,9 +5,9 @@ authors:
   given-names: "Tillmann"
   orcid: "https://orcid.org/0009-0001-4831-9729"
 title: "Endia"
-version: 24.4.1
+version: 24.6.0
 doi: "10.5281/zenodo.12810766"
-date-released: 2024-08-01
+date-released: 2025-01-13
 url: "https://github.com/endia-org/Endia"
 license: Apache-2.0 with LLVM-exception
 keywords:
@@ -16,4 +16,4 @@ keywords:
   - "compiler"
   - "machine learning"
 repository-code: "https://github.com/endia-org/Endia"
-abstract: "Endia is an open-source project for scientific computing in Mojo, aiming to provide high-performance numerical methods and tools for researchers and developers."
+abstract: "Endia is an open-source project for scientific computing in Mojo, facilitating the development of dynamic Machine Learning workflows."

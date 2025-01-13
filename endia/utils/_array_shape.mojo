@@ -11,11 +11,11 @@
 # limitations under the License.
 # ===----------------------------------------------------------------------=== #
 
-from memory.arc import Arc
+from memory import ArcPointer
 from algorithm import vectorize, parallelize
 
 # from utils import Variant
-from time import now
+from time import perf_counter
 from random import seed, random_ui64
 import math
 from python import Python, PythonObject
@@ -56,7 +56,7 @@ struct ShapeNode(CollectionElement):
     var storage_offset: Int
     var ndim: Int
     var size: Int
-    var args: List[Arc[Self]]
+    var args: List[ArcPointer[Self]]
     var shape_op_fwd: fn (inout ArrayShape, List[ArrayShape]) raises -> None
     var is_computed: Bool
     var name: String
@@ -71,7 +71,7 @@ struct ShapeNode(CollectionElement):
         self.size = 1
         for i in range(len(shape)):
             self.size *= shape[i]
-        self.args = List[Arc[Self]]()
+        self.args = List[ArcPointer[Self]]()
         self.shape_op_fwd = default_shape_op_fwd
         self.is_computed = False
         self.name = ""
@@ -89,7 +89,7 @@ struct ArrayShape(CollectionElement, Stringable, EqualityComparable):
     the underlying shape data. ArrayShape offers initialization methods to create instances from shape lists and stride.
     """
 
-    var shape_node: Arc[ShapeNode]
+    var shape_node: ArcPointer[ShapeNode]
 
     fn __init__(
         inout self,
@@ -104,7 +104,7 @@ struct ArrayShape(CollectionElement, Stringable, EqualityComparable):
                 _stride.append(1)
             for i in range(len(shape) - 2, -1, -1):
                 _stride[i] = shape[i + 1] * _stride[i + 1]
-        self.shape_node = Arc[ShapeNode](
+        self.shape_node = ArcPointer[ShapeNode](
             ShapeNode(
                 shape,
                 _stride,
@@ -112,7 +112,7 @@ struct ArrayShape(CollectionElement, Stringable, EqualityComparable):
             )
         )
 
-    fn __init__(inout self, shape_node: Arc[ShapeNode]):
+    fn __init__(inout self, shape_node: ArcPointer[ShapeNode]):
         self.shape_node = shape_node
 
     fn __copyinit__(inout self, other: ArrayShape):
@@ -348,7 +348,7 @@ fn slices_to_array_shape(arg: List[Slice]) -> ArrayShape:
         var arg = arg[i]
         data.append(arg.start.value() if arg.start else 0)
         data.append(arg.end.value() if arg.end else -1)
-        data.append(arg.step)
+        data.append(arg.step.value())
     return ArrayShape(data)
 
 

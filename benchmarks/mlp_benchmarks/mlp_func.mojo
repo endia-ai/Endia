@@ -16,7 +16,7 @@ import endia.nn as nn
 import endia.optim as optim
 from endia.utils import dtype
 import math
-from time import now
+from time import perf_counter
 
 
 def fill_sin_(inout curr: nd.Array, arg: nd.Array):
@@ -86,22 +86,19 @@ def benchmark_mlp_func():
     value_and_grad_fwd = nd.value_and_grad(fwd)
 
     # setup time variables
-    start = SIMD[dtype, 1](0)
-    end = SIMD[dtype, 1](0)
-    time_all = SIMD[dtype, 1](0)
-    fwd_start = SIMD[dtype, 1](0)
-    fwd_end = SIMD[dtype, 1](0)
-    time_fwd = SIMD[dtype, 1](0)
-    # grad_start = SIMD[dtype, 1](0)
-    # grad_end = SIMD[dtype, 1](0)
-    # time_grad = SIMD[dtype, 1](0)
-    optim_start = SIMD[dtype, 1](0)
-    optim_end = SIMD[dtype, 1](0)
-    time_optim = SIMD[dtype, 1](0)
+    start = SIMD[DType.float64, 1](0)
+    end = SIMD[DType.float64, 1](0)
+    time_all = SIMD[DType.float64, 1](0)
+    fwd_start = SIMD[DType.float64, 1](0)
+    fwd_end = SIMD[DType.float64, 1](0)
+    time_fwd = SIMD[DType.float64, 1](0)
+    optim_start = SIMD[DType.float64, 1](0)
+    optim_end = SIMD[DType.float64, 1](0)
+    time_optim = SIMD[DType.float64, 1](0)
 
     # training loop
     for t in range(1, num_iters + 1):
-        start = now()
+        start = perf_counter()
 
         # fill input and target inplace
         var arg0 = args[0]
@@ -109,16 +106,16 @@ def benchmark_mlp_func():
         fill_sin_(args[1], arg0)
 
         # compute loss
-        fwd_start = now()
+        fwd_start = perf_counter()
         value_and_grad = value_and_grad_fwd(args)[List[List[nd.Array]]]
-        fwd_end = now()
+        fwd_end = perf_counter()
 
         loss = value_and_grad[0][0]
         avg_loss += loss.load(0)
         args_grads = value_and_grad[1]
 
         # update weights and biases inplace
-        optim_start = now()
+        optim_start = perf_counter()
         for i in range(2, len(args_grads)):
             # implement adam with above variables as in the step function above
             m[i] = beta1 * m[i] + (1 - beta1).cast[dtype]() * args_grads[i]
@@ -130,8 +127,8 @@ def benchmark_mlp_func():
             v_hat = v[i] / (1 - beta2**t).cast[dtype]()
             args[i] -= lr * m_hat / (nd.sqrt(v_hat) + eps)
 
-        optim_end = now()
-        end = now()
+        optim_end = perf_counter()
+        end = perf_counter()
 
         time_fwd += (fwd_end - fwd_start) / 1000000000
         time_optim += (optim_end - optim_start) / 1000000000

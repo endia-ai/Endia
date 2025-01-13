@@ -122,7 +122,7 @@ struct ReduceMax(DifferentiableReduceOp):
                             var target_idx = target_idx_1 + k * target_stride[
                                 rank - 1
                             ]
-                            curr_data.store[width=width](
+                            curr_data.store(
                                 target_idx,
                                 max(
                                     curr_data.load[width=width](target_idx),
@@ -165,7 +165,7 @@ struct ReduceMax(DifferentiableReduceOp):
             else:
                 var end = arg.size() - arg.size() % nelts[dtype]()
                 for i in range(0, end, nelts[dtype]()):
-                    curr_data.store[width = nelts[dtype]()](
+                    curr_data.store(
                         i,
                         arg_data.load[width = nelts[dtype]()](i).reduce_max(),
                     )

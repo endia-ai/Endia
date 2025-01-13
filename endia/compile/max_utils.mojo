@@ -26,7 +26,7 @@ fn tensor_to_array(owned src: Tensor[dtype]) raises -> Array:
     var shape = List[Int]()
     for i in range(src.rank()):
         shape.append(src.shape()[i])
-    var dst = Array(shape, is_view=True)
+    var dst = Array(array_shape=ArrayShape(shape), is_view=True)
     dst.data_(src._steal_ptr())
     dst.is_view_(False)
     return dst
@@ -114,7 +114,7 @@ def build_graph(
             elif array[].name() == "permute":
                 symbol_trace.append(ops.transpose(arg0, -1, -2))
             else:
-                print("Unknown view op:", array[].name())
+                print("Unkperf_countern view op:", array[].name())
             continue
 
         elif array[].name() == "reduce_add":
@@ -174,7 +174,7 @@ def build_graph(
                 symbol_trace.append(ops.tanh(arg0))
 
             else:
-                print("Unknown unary op:", array[].name())
+                print("Unkperf_countern unary op:", array[].name())
 
         elif len(tmp_args) == 2:
             var arg1 = symbol_trace[tmp_args[0].id()]
@@ -422,9 +422,9 @@ def build_graph(
 
             # binary ops error handling
             else:
-                print("Unknown binary op:", array[].name())
+                print("Unkperf_countern binary op:", array[].name())
         else:
-            raise "Unknown op:" + array[].name()
+            raise "Unkperf_countern op:" + array[].name()
 
     for output in outputs:
         output_symbols.append(symbol_trace[output[].id()])

@@ -11,11 +11,11 @@
 # limitations under the License.
 # ===----------------------------------------------------------------------=== #
 
-from memory.arc import Arc
+from memory import ArcPointer
 from algorithm import vectorize, parallelize
 
 # from utils import Variant
-from time import now
+from time import perf_counter
 from random import seed, random_ui64
 import math
 from python import Python, PythonObject

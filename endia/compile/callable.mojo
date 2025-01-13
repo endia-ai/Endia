@@ -26,12 +26,12 @@ struct Callable(CollectionElement):
     enabling dynamic optimization and execution.
     """
 
-    var args: Arc[List[Array]]
+    var args: ArcPointer[List[Array]]
     var argnums: List[List[Int]]
     var func: Variant[
         fn (List[Array]) raises -> Array, fn (Array) raises -> Array
     ]
-    var captured_graph: Arc[FxGraph]
+    var captured_graph: ArcPointer[FxGraph]
     var order_of_differentiation: Int
     var optimize_jit: Bool
     var args_initialized: Bool
@@ -51,7 +51,7 @@ struct Callable(CollectionElement):
         self.args = List[Array]()
         self.argnums = argnums
         self.func = func
-        self.captured_graph = Arc[FxGraph](FxGraph(compile_with_MAX))
+        self.captured_graph = ArcPointer[FxGraph](FxGraph(compile_with_MAX))
         self.order_of_differentiation = order_of_differentiation
         self.optimize_jit = optimize_jit
         self.args_initialized = False

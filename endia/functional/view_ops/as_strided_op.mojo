@@ -82,7 +82,7 @@ struct AsStrided(DifferentiableViewOp):
         var out_shape = out.array_shape()
         return as_strided_inv(
             grad,
-            primals[0].shape(),
+            ArrayShape(primals[0].shape()),
             out_shape.shape(),
             out_shape.stride(),
             out_shape.storage_offset(),

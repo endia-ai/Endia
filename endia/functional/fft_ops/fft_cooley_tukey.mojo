@@ -45,13 +45,21 @@ fn cooley_tukey_non_recursive(
 
             for i in range(start, end):
                 if (i - start) % 2 == 0:
-                    temp.store[width=2](
-                        2 * even_index, res_data.load[width=2](2 * i)
+                    # temp.store(
+                    #     2 * even_index, res_data.load[width=2](2 * i)
+                    # )
+                    temp.offset(2 * even_index).strided_store(
+                        res_data.load[width=2](2 * i), 
+                        stride=1
                     )
                     even_index += 1
                 else:
-                    temp.store[width=2](
-                        2 * odd_index, res_data.load[width=2](2 * i)
+                    # temp.store(
+                    #     2 * odd_index, res_data.load[width=2](2 * i)
+                    # )
+                    temp.offset(2 * odd_index).strided_store(
+                        res_data.load[width=2](2 * i), 
+                        stride=1
                     )
                     odd_index += 1
 
@@ -83,7 +91,7 @@ fn cooley_tukey_sequencial_recombine(
 
         for k in range(subarray_size // 2):
             var p = (-2 * pi / subarray_size) * k
-            twiddle_factors.store[width=2](
+            twiddle_factors.store(
                 2 * k, SIMD[DType.float64, 2](math.cos(p), math.sin(p))
             )
 
@@ -94,10 +102,10 @@ fn cooley_tukey_sequencial_recombine(
             for k in range(subarray_size // 2):
                 var k_times_2 = 2 * k
                 var k_times_2_plus_1 = k_times_2 + 1
-                even.store[width=2](
+                even.store(
                     k_times_2, res_data.load[width=2](2 * (start + k))
                 )
-                odd.store[width=2](
+                odd.store(
                     k_times_2, res_data.load[width=2](2 * (mid + k))
                 )
                 var twiddle_factor = twiddle_factors.load[width=2](k_times_2)
@@ -111,11 +119,11 @@ fn cooley_tukey_sequencial_recombine(
                     twiddle_factor[0] * odd[k_times_2_plus_1]
                     + twiddle_factor[1] * odd[k_times_2],
                 )
-                temp.store[width=2](
+                temp.store(
                     2 * (start + k),
                     even.load[width=2](k_times_2) + T.load[width=2](k_times_2),
                 )
-                temp.store[width=2](
+                temp.store(
                     2 * (mid + k),
                     even.load[width=2](k_times_2) - T.load[width=2](k_times_2),
                 )
@@ -144,8 +152,8 @@ fn fft_cooley_tukey_inplace_bit_reversal(
         var j = int(reordered_arr_data.load(i))
         if i < j:
             var tmp = data.load[width=2](2 * i)
-            data.store[width=2](2 * i, data.load[width=2](2 * j))
-            data.store[width=2](2 * j, tmp)
+            data.store(2 * i, data.load[width=2](2 * j))
+            data.store(2 * j, tmp)
 
     # Cooley-Tukey FFT
     var m = 2
@@ -165,8 +173,8 @@ fn fft_cooley_tukey_inplace_bit_reversal(
                 var t = SIMD[DType.float64, 2](
                     u[0] * d[0] - u[1] * d[1], u[0] * d[1] + u[1] * d[0]
                 )
-                data.store[width=2](j_2_plus_m, z - t)
-                data.store[width=2](j_2, z + t)
+                data.store(j_2_plus_m, z - t)
+                data.store(j_2, z + t)
 
             # Update u for the next iteration
             u = SIMD[DType.float64, 2](

@@ -1,4 +1,4 @@
-# Welcome to Endia 24.5.0
+# Welcome to Endia 24.6.0
 
 **Endia** is a general-purpose scientific computing library, featuring:
 
@@ -22,7 +22,7 @@
 
 ## Installation
 
-1. **Install [Mojo 24.5](https://docs.modular.com/mojo/manual/get-started) 🔥**
+1. **Install [Mojo 24.6](https://docs.modular.com/mojo/manual/get-started) 🔥**
 
 2. **Add the Endia Package** (at the top level of your project):
 
@@ -133,15 +133,15 @@ Contributions to Endia are welcome! If you'd like to contribute, please follow t
 If you use Endia in your research or project, please cite it as follows:
 
 ```bibtex
-@software{Fehrenbach_Endia_2024,
+@software{Fehrenbach_Endia_2025,
   author = {Fehrenbach, Tillmann},
   license = {Apache-2.0 with LLVM Exceptions},
   doi = {10.5281/zenodo.12810766},
-  month = {09},
+  month = {01},
   title = {{Endia}},
-  url = {https://github.com/endia-org/Endia},
-  version = {24.5.0},
-  year = {2024}
+  url = {https://github.com/endia-ai/Endia},
+  version = {24.6.0},
+  year = {2025}
 }
 ```
 

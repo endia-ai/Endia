@@ -12,7 +12,7 @@
 # ===----------------------------------------------------------------------=== #
 
 from .test_endia import *
-from .integration_tests import *
+# from .integration_tests import *
 
 
 def run_unit_tests():
@@ -164,10 +164,10 @@ def run_unit_tests():
     run_test_avg_pool3d()
 
 
-def run_integration_tests():
-    # integration Tests: Test random functions
-    run_test_foo()
-    run_test_foo_grad()
+# def run_integration_tests():
+#     # integration Tests: Test random functions
+#     run_test_foo()
+#     run_test_foo_grad()
 
 
 def run_fft_tests():
@@ -190,6 +190,13 @@ def run_tests():
     """
     This is the main function that runs all the tests and benchmarks.
     """
-    # run_fft_tests()
+    # check if PyTorch is installed
+    try:
+        _ = Python.import_module("torch")
+
+    except:
+        raise "\033[91m[ERROR]\033[0m PyTorch not found. Skipping tests.\nIn order to use PyTorch please install it via:\n\033[92m magic project channel add \"pytorch\" && magic add pytorch \033[0m"
+
+    # run tests
+    run_fft_tests()
     run_unit_tests()
-    # run_integration_tests()

@@ -26,10 +26,11 @@ from endia.compile import FxGraph
 from endia.functional import *
 from endia.functional._utils import execute_copy_raw
 
-from memory import Arc, memset_zero
+from memory import ArcPointer, memset_zero
 from algorithm import vectorize, parallelize
-from time import now
+from time import perf_counter
 from random import seed, random_ui64
+from memory import UnsafePointer
 import math
 from python import Python, PythonObject
 from collections import Optional
@@ -62,13 +63,13 @@ struct Node(CollectionElement):
 
     var id: Int
     var name: String
-    var shape: Arc[ShapeNode]
+    var shape: ArcPointer[ShapeNode]
     var data: UnsafePointer[Scalar[dtype]]
     var is_view: Bool
-    var base: List[Arc[Self]]
-    var args: List[Arc[Self]]
-    var kwargs: List[Arc[Self]]
-    var grads: List[Arc[Self]]
+    var base: List[ArcPointer[Self]]
+    var args: List[ArcPointer[Self]]
+    var kwargs: List[ArcPointer[Self]]
+    var grads: List[ArcPointer[Self]]
     var fwd: fn (inout Array, List[Array]) raises -> None
     var uew: List[
         fn (
@@ -104,11 +105,11 @@ struct Node(CollectionElement):
     var vjp: fn (List[Array], Array, Array) raises -> List[Array]
     var requires_grad: Bool
     var compute_jvp: Bool
-    var graph: Optional[Arc[FxGraph]]
+    var graph: Optional[ArcPointer[FxGraph]]
     var id_in_graph: Optional[Int]
     var has_real: Bool
     var has_imag: Bool
-    var meta_data: Arc[
+    var meta_data: ArcPointer[
         List[Int]
     ]  # some additional information encoded as a list of integers
 
@@ -129,10 +130,10 @@ struct Node(CollectionElement):
         else:
             self.data = UnsafePointer[Scalar[dtype]].alloc(0)
         self.is_view = is_view
-        self.base = List[Arc[Node]]()
-        self.args = List[Arc[Self]]()
-        self.kwargs = List[Arc[Self]]()
-        self.grads = List[Arc[Self]]()
+        self.base = List[ArcPointer[Node]]()
+        self.args = List[ArcPointer[Self]]()
+        self.kwargs = List[ArcPointer[Self]]()
+        self.grads = List[ArcPointer[Self]]()
         self.fwd = default_fwd
         self.uew = List[
             fn (
@@ -172,7 +173,7 @@ struct Node(CollectionElement):
         self.id_in_graph = None
         self.has_real = True
         self.has_imag = is_complex
-        self.meta_data = Arc(List[Int]())
+        self.meta_data = ArcPointer(List[Int]())
 
     fn __del__(owned self):
         # print("Node __del__")
@@ -183,24 +184,24 @@ struct Node(CollectionElement):
 #                                                       Array
 ###############################################################################################################
 @value
-struct Array(CollectionElement, Stringable, Formattable):
+struct Array(CollectionElement, Stringable, Writable):
     """
     Array is the primary data structure in the autograd engine.
     It serves as a wrapper around the Node struct, which encapsulates the array's data, shape, gradients, and other metadata.
     """
 
-    var node: Arc[Node]
+    var node: ArcPointer[Node]
 
     fn __init__(
         inout self,
         shape: List[Int],
         requires_grad: Bool = False,
         is_complex: Bool = False,
-    ):
-        self.node = Arc(Node(shape, requires_grad, is_complex))
+    ):  
+        self.node = ArcPointer(Node(ArrayShape(shape), requires_grad, is_complex))
 
     fn __init__(inout self, array_shape: ArrayShape, is_view: Bool = False):
-        self.node = Arc[Node](Node(array_shape.shape_node, is_view=is_view))
+        self.node = ArcPointer[Node](Node(ArrayShape(array_shape.shape_node), is_view=is_view))
 
     fn __copyinit__(inout self, other: Self):
         self.node = other.node
@@ -208,7 +209,7 @@ struct Array(CollectionElement, Stringable, Formattable):
     fn __moveinit__(inout self, owned other: Self):
         self.node = other.node^
 
-    fn __init__(inout self, node: Arc[Node]):
+    fn __init__(inout self, node: ArcPointer[Node]):
         self.node = node
 
     fn __init__(
@@ -298,7 +299,7 @@ struct Array(CollectionElement, Stringable, Formattable):
             return id.unsafe_take()
         return -1
 
-    fn graph(self) raises -> Arc[FxGraph]:
+    fn graph(self) raises -> ArcPointer[FxGraph]:
         if not self.has_fxgraph():
             raise "Error: No graph set for this node"
         var graph_opt = self.node[].graph
@@ -308,7 +309,7 @@ struct Array(CollectionElement, Stringable, Formattable):
         self.node[].data.free()
         self.node[].data = data_ptr
 
-    fn graph_(inout self, graph: Arc[FxGraph]):
+    fn graph_(inout self, graph: ArcPointer[FxGraph]):
         self.node[].graph = graph
 
     fn has_fxgraph(self) -> Bool:
@@ -341,7 +342,7 @@ struct Array(CollectionElement, Stringable, Formattable):
 
             if not graph_node.is_computed:
                 var array_in_graph = self.graph_dual()
-                var subgraph: Arc[FxSubgraph]
+                var subgraph: ArcPointer[FxSubgraph]
                 if not graph_node.sub_graph:
                     var compile_with_MAX = graph[].compile_with_MAX
                     subgraph = graph[].subgraph(compile_with_MAX)
@@ -559,9 +560,11 @@ struct Array(CollectionElement, Stringable, Formattable):
                 self.node[].shape[].storage_offset,
             )
             var base = self.node[].base[0]
-            base[].data.store[width=width](self.real_idx(base_idx), data)
+            base[].data.store(self.real_idx(base_idx), data)
+            # base[].data.offset(self.real_idx(base_idx)).strided_store[width=width](data, stride=1)
         else:
-            return self.data().store[width=width](self.real_idx(idx), data)
+            return self.data().store(self.real_idx(idx), data)
+            # self.data().offset(self.real_idx(idx)).strided_store[width=width](data, stride=1)
 
     fn load_imag[width: Int = 1](self, idx: Int) -> SIMD[dtype, width]:
         if self.is_view():
@@ -587,9 +590,10 @@ struct Array(CollectionElement, Stringable, Formattable):
                 self.node[].shape[].storage_offset,
             )
             var base = self.node[].base[0]
-            base[].data.store[width=width](self.imag_idx(base_idx), data)
+            base[].data.offset(self.imag_idx(base_idx)).strided_store[width=width](data, stride=1)
         else:
-            return self.data().store[width=width](self.imag_idx(idx), data)
+            # return self.data().store[width=width](self.imag_idx(idx), data)
+            self.data().offset(self.imag_idx(idx)).strided_store[width=width](data, stride=1)
 
     fn load_complex[
         width: Int = 1
@@ -625,13 +629,15 @@ struct Array(CollectionElement, Stringable, Formattable):
                 nd_idx, self.stride(), self.storage_offset()
             )
             var base = self.node[].base[0]
-            base[].data.store[width = 2 * width](
-                self.real_idx(base_idx), real.interleave(imag)
-            )
+            # base[].data.store[width = 2 * width](
+            #     self.real_idx(base_idx), real.interleave(imag)
+            # )
+            base[].data.offset(self.real_idx(base_idx)).strided_store[width=2 * width](real.interleave(imag), stride=1)
         else:
-            return self.data().store[width = 2 * width](
-                self.real_idx(idx), real.interleave(imag)
-            )
+            # return self.data().store[width = 2 * width](
+            #     self.real_idx(idx), real.interleave(imag)
+            # )
+            self.data().offset(self.real_idx(idx)).strided_store[width=2 * width](real.interleave(imag), stride=1)
 
     fn compute_jvp(self) -> Bool:
         return self.node[].compute_jvp
@@ -750,7 +756,7 @@ struct Array(CollectionElement, Stringable, Formattable):
         # out += ", dtype=" + str(dtype) + ")"
         return out
 
-    fn format_to(self, inout writer: Formatter):
+    fn write_to[W: Writer](self, inout writer: W):
         writer.write[String](str(self))
 
     fn execute_fwds(
@@ -797,7 +803,7 @@ struct Array(CollectionElement, Stringable, Formattable):
     fn T(self) raises -> Array:
         if self.ndim() == 1:
             return self
-        return permute(self, List(-1, -2))
+        return permute(self, ArrayShape(List(-1, -2)))
 
     fn reshape(self, shape: List[Int]) raises -> Array:
         return reshape(self, shape)
@@ -887,11 +893,15 @@ struct Array(CollectionElement, Stringable, Formattable):
                                 var src_j_idx = 2 * (
                                     src_i_idx + j * src_stride[rank - 1]
                                 )
-                                dest_data.store[width = 2 * simd_width](
-                                    dst_j_idx,
-                                    source_data.load[width = 2 * simd_width](
-                                        src_j_idx
-                                    ),
+                                # dest_data.store[width = 2 * simd_width](
+                                #     dst_j_idx,
+                                #     source_data.load[width = 2 * simd_width](
+                                #         src_j_idx
+                                #     ),
+                                # )
+                                dest_data.offset(dst_j_idx).strided_store[width=2 * simd_width](
+                                    source_data.load[width=2 * simd_width](src_j_idx),
+                                    stride=1
                                 )
 
                             vectorize[copy_v_complex, 2 * nelts[dtype]()](cols)
@@ -904,9 +914,13 @@ struct Array(CollectionElement, Stringable, Formattable):
                                 var src_j_idx = 2 * (
                                     src_i_idx + j * src_stride[rank - 1]
                                 )
-                                dest_data.store[width=2](
-                                    dst_j_idx,
+                                # dest_data.store[width=2](
+                                #     dst_j_idx,
+                                #     source_data.load[width=2](src_j_idx),
+                                # )
+                                dest_data.offset(dst_j_idx).strided_store[width=2](
                                     source_data.load[width=2](src_j_idx),
+                                    stride=1
                                 )
 
                     else:
@@ -924,11 +938,15 @@ struct Array(CollectionElement, Stringable, Formattable):
                                 var src_j_idx = src_i_idx + j * src_stride[
                                     src_rank - 1
                                 ]
-                                dest_data.store[width=simd_width](
-                                    dst_j_idx,
-                                    source_data.load[width=simd_width](
-                                        src_j_idx
-                                    ),
+                                # dest_data.store[width=simd_width](
+                                #     dst_j_idx,
+                                #     source_data.load[width=simd_width](
+                                #         src_j_idx
+                                #     ),
+                                # )
+                                dest_data.offset(dst_j_idx).strided_store[width=simd_width](
+                                    source_data.load[width=simd_width](src_j_idx),
+                                    stride=1
                                 )
 
                             vectorize[copy_v, nelts[dtype]()](cols)

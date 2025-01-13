@@ -154,7 +154,7 @@ struct ReduceArgMin(DifferentiableReduceOp):
             else:
                 var end = arg.size() - arg.size() % nelts[dtype]()
                 for i in range(0, end, nelts[dtype]()):
-                    tmp_min_data.store[width = nelts[dtype]()](
+                    tmp_min_data.store(
                         i,
                         arg_data.load[width = nelts[dtype]()](i).reduce_min(),
                     )

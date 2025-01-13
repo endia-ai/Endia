@@ -35,7 +35,7 @@ struct FxSubgraph(CollectionElement):
     var traversing_arrays: List[Array]
     var inputs: List[Array]
     var outputs: List[Array]
-    var max_model: List[Arc[Model]]
+    var max_model: List[ArcPointer[Model]]
     var compile_with_MAX: Bool
 
     fn __init__(
@@ -46,7 +46,7 @@ struct FxSubgraph(CollectionElement):
         self.traversing_arrays = traversing_arrays
         self.inputs = List[Array]()
         self.outputs = List[Array]()
-        self.max_model = List[Arc[Model]]()
+        self.max_model = List[ArcPointer[Model]]()
         self.compile_with_MAX = compile_with_MAX
 
     fn __copyinit__(inout self, other: FxSubgraph):
@@ -120,7 +120,7 @@ struct FxSubgraph(CollectionElement):
                     setup_shape_and_data(base)
 
                 self.max_model.append(
-                    Arc(
+                    ArcPointer(
                         build_model(
                             self.inputs, self.outputs, self.traversing_arrays
                         )
@@ -270,7 +270,7 @@ struct FxSubgraph(CollectionElement):
 
     fn IR(self) raises -> String:
         """
-        Get an IR like code representation of the subgraph. As of right now this has now real functionality, but eventually this
+        Get an IR like code representation of the subgraph. As of right perf_counter this has perf_counter real functionality, but eventually this
         IR string should become a valid MLIR code representation of the subgraph, which can be compiled and optimized by the MLIR.
         """
         # create an IR like code representation of the subgraph
@@ -383,7 +383,7 @@ struct FxGraphNode(CollectionElement):
     var branch_to_idx: Int
     var is_breakpoint: Bool
     var dependencies: Int
-    var sub_graph: List[Arc[FxSubgraph]]
+    var sub_graph: List[ArcPointer[FxSubgraph]]
     var tmp_id_in_subgraph: Int
     var jvp_derivatives: List[Array]
     var is_computed: Bool
@@ -397,7 +397,7 @@ struct FxGraphNode(CollectionElement):
         self.branch_to_idx = branch_to_idx
         self.is_breakpoint = False
         self.dependencies = 0
-        self.sub_graph = List[Arc[FxSubgraph]]()
+        self.sub_graph = List[ArcPointer[FxSubgraph]]()
         self.tmp_id_in_subgraph = -1
         self.jvp_derivatives = List[Array]()
         self.is_computed = False
@@ -501,7 +501,7 @@ struct FxGraph:
                 var size = graph_node[].array_in_graph.size()
                 memset_zero(data, size)
 
-    fn subgraph(inout self, compile_with_MAX: Bool) raises -> Arc[FxSubgraph]:
+    fn subgraph(inout self, compile_with_MAX: Bool) raises -> ArcPointer[FxSubgraph]:
         var subgraph_list = List[Array]()
         # var curr = self.trace[breakpoint_id].array_in_graph
         # reset_node_id_recursive(curr)
@@ -552,7 +552,7 @@ struct FxGraph:
         #         print(arg[].id(), arg[].name(), ", ", end="")
         #     print("]")
 
-        return Arc(FxSubgraph(compile_with_MAX, subgraph_final_trace))
+        return ArcPointer(FxSubgraph(compile_with_MAX, subgraph_final_trace))
 
 
 fn top_order_subgraph_rec(inout curr: Array, inout trace: List[Array]) raises:

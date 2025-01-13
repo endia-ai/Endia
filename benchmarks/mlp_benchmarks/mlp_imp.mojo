@@ -14,7 +14,7 @@
 import endia as nd
 import endia.nn as nn
 import endia.optim as optim
-from time import now
+from time import perf_counter
 
 
 def fill_sin_(inout curr: nd.Array, arg: nd.Array):
@@ -39,47 +39,47 @@ def benchmark_mlp_imp():
         mlp.params(), lr=0.001, beta1=0.9, beta2=0.999, eps=1e-8
     )
 
-    fwd_time = SIMD[dtype, 1](0)
-    bwd_time = SIMD[dtype, 1](0)
-    opt_time = SIMD[dtype, 1](0)
-    end_time = SIMD[dtype, 1](0)
+    fwd_time = SIMD[DType.float64, 1](0)
+    bwd_time = SIMD[DType.float64, 1](0)
+    opt_time = SIMD[DType.float64, 1](0)
+    end_time = SIMD[DType.float64, 1](0)
 
     for i in range(1, num_iters + 1):
-        start = now()
+        start = perf_counter()
 
-        start_init = now()
+        start_init = perf_counter()
         nd.randu_(x, min=0, max=1)
         fill_sin_(y, x)
-        end_init = now()
+        end_init = perf_counter()
 
-        start_fwd = now()
+        start_fwd = perf_counter()
         pred = mlp.forward(x)
         loss = nd.mse(pred, y)
-        end_fwd = now()
+        end_fwd = perf_counter()
 
         # if i == 1:
         #     nd.utils.visualize_graph(loss, "./assets/mlp_imp_graph")
 
         avg_loss += loss.load(0)
 
-        start_bwd = now()
+        start_bwd = perf_counter()
         loss.backward()
-        end_bwd = now()
+        end_bwd = perf_counter()
 
-        start_opt = now()
+        start_opt = perf_counter()
         optimizer.step()
-        end_opt = now()
+        end_opt = perf_counter()
 
-        zero_grad_time_start = now()
+        zero_grad_time_start = perf_counter()
         loss.zero_grad()
-        zero_grad_time_end = now()
+        zero_grad_time_end = perf_counter()
 
-        end = now()
+        end = perf_counter()
 
-        fwd_time += (end_fwd - start_fwd) / SIMD[dtype, 1](1000000000)
-        bwd_time += (end_bwd - start_bwd) / SIMD[dtype, 1](1000000000)
-        opt_time += (end_opt - start_opt) / SIMD[dtype, 1](1000000000)
-        end_time += (end - start) / SIMD[dtype, 1](1000000000)
+        fwd_time += (end_fwd - start_fwd) / SIMD[DType.float64, 1](1000000000.0)
+        bwd_time += (end_bwd - start_bwd) / SIMD[DType.float64, 1](1000000000)
+        opt_time += (end_opt - start_opt) / SIMD[DType.float64, 1](1000000000)
+        end_time += (end - start) / SIMD[DType.float64, 1](1000000000)
 
         if i % every == 0:
             print("- Iter: ", i, " Loss: ", avg_loss / every)

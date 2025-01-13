@@ -91,9 +91,13 @@ fn execute_unary_op(inout curr: Array, args: List[Array]) raises:
             ).deinterleave()
             var res_deinterleaved = simd_op(data0[0], data0[1])
             var res = res_deinterleaved[0].interleave(res_deinterleaved[1])
-            curr_data.store[width = 2 * ((nelts[dtype]() * 2) // 2)](
-                idx_real, res
-            )
+            # curr_data.store[width = 2 * ((nelts[dtype]() * 2) // 2)](
+            #     idx_real, res
+            # )
+            curr_data.offset(idx_real).strided_store[width = 2 * ((nelts[dtype]() * 2) // 2)](
+                res,
+                stride=1
+            )   
         if rest_size != 0:
             var rest_simd0_real = SIMD[dtype, nelts[dtype]() * 2 // 2]()
             var rest_simd0_imag = SIMD[dtype, nelts[dtype]() * 2 // 2]()
@@ -118,9 +122,10 @@ fn execute_unary_op(inout curr: Array, args: List[Array]) raises:
                 arg0_data.load[width = nelts[dtype]() * 2 // 2](i),
                 SIMD[dtype, nelts[dtype]() * 2 // 2](0),
             )[0]
-            curr_data.store[width = nelts[dtype]() * 2 // 2](i, res)
+            # curr_data.store[width = nelts[dtype]() * 2 // 2](i, res)
+            curr_data.offset(i).strided_store[width = nelts[dtype]() * 2 // 2](res, stride=1)
 
-        # now we vectorize along the last dimesion
+        # perf_counter we vectorize along the last dimesion
         if rest_size != 0:
             var rest_simd0 = SIMD[dtype, nelts[dtype]() * 2 // 2]()
             for i in range(rest_size):

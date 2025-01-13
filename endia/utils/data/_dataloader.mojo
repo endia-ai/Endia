@@ -118,7 +118,7 @@ struct _DatatLoaderIter(CollectionElement):
     fn __iter__(inout self) raises -> Self:
         return self
 
-    fn __next__(inout self) raises -> Arc[Array]:
+    fn __next__(inout self) raises -> ArcPointer[Array]:
         var index = self._data_loader_specs.index
         var batch_size = self._data_loader_specs.batch_size
 
@@ -127,7 +127,7 @@ struct _DatatLoaderIter(CollectionElement):
                 index : index + batch_size
             ]
             self._data_loader_specs.index += batch_size
-            return Arc(contiguous(res))
+            return ArcPointer(contiguous(res))
         elif (
             index < self._data_loader_specs.num_rows
             and not self._data_loader_specs.drop_last
@@ -136,7 +136,7 @@ struct _DatatLoaderIter(CollectionElement):
                 index : self._data_loader_specs.num_rows
             ]
             self._data_loader_specs.index = self._data_loader_specs.num_rows
-            return Arc(contiguous(res))
+            return ArcPointer(contiguous(res))
         else:
             raise "StopIteration"
 

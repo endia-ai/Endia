@@ -77,12 +77,14 @@ fn is_close(
         for i in range(x.size()):
             var real = data.load(2 * i)
             var imag = data.load(2 * i + 1)
-            var real_torch_val = real_torch[i].to_float64().cast[
-                DType.float32
-            ]()
-            var imag_torch_val = imag_torch[i].to_float64().cast[
-                DType.float32
-            ]()
+            # var real_torch_val = real_torch[i].to_float64().cast[
+            #     DType.float32
+            # ]()
+            # var imag_torch_val = imag_torch[i].to_float64().cast[
+            #     DType.float32
+            # ]()
+            var real_torch_val = float(real_torch[i]).cast[DType.float32]()
+            var imag_torch_val = float(imag_torch[i]).cast[DType.float32]()
             var magnitude = max(
                 math.sqrt(real_torch_val**2 + imag_torch_val**2), epsilon
             )
@@ -113,9 +115,10 @@ fn is_close(
 
         for i in range(x.size()):
             var real = data.load(i)
-            var real_torch_val = real_torch[i].to_float64().cast[
-                DType.float32
-            ]()
+            # var real_torch_val = real_torch[i].to_float64().cast[
+            #     DType.float32
+            # ]()
+            var real_torch_val = float(real_torch[i]).cast[DType.float32]()
             var magnitude = max(abs(real_torch_val), epsilon)
             diff += abs(real - real_torch_val) / magnitude
 

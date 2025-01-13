@@ -50,7 +50,7 @@ fn get_np_dtype[dtype: DType](np: PythonObject) raises -> PythonObject:
     elif dtype.__is__(DType.int64):
         return np.uint8
 
-    raise "Unknown datatype"
+    raise "Unkperf_countern datatype"
 
 
 @always_inline
