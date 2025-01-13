@@ -21,7 +21,7 @@
 
 Prerequisites: [Mojo 24.6](https://docs.modular.com/mojo/manual/get-started) 🔥
 
-### Option 1: Install the pure Endia Package (endia.📦) for usage in another project
+### Option 1: Install the pure Endia Package for usage in another project
 
    Add the Endia Package at the top level of your project:
 
@@ -39,13 +39,13 @@ Prerequisites: [Mojo 24.6](https://docs.modular.com/mojo/manual/get-started) �
     cd Endia
     magic shell
     ```
+
 3. **Run the Examples, Tests and Benchmarks**
     Go to the `run_all.mojo` file and adjust the execution.
 
     ```bash
     mojo run_all.mojo
     ```
-
 
 ####
 
