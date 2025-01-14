@@ -21,16 +21,16 @@ Checkout the [Endia documentation](https://endia.vercel.app/docs/array) for more
 
 ## Usage
 
-**Prerequisites: [Mojo 24.6](https://docs.modular.com/mojo/manual/get-started) 🔥**
+**Prerequisites: [Mojo 24.6](https://docs.modular.com/mojo/manual/get-started) 🔥 and [Magic](https://docs.modular.com/magic/)**
 
 ### Option 1: Install the package for usage in your project
-- **Add the Endia Package at the top level of your project:**
 
-    ```shell
-    curl -o "endia.📦" https://raw.githubusercontent.com/endia-ai/Endia/main/endia.mojopkg
-    ```
+- Add the Modular Community channel to your project's `.toml` file and install the package:
 
-    <!-- > *But what about **all the other internal dependencies**? - Good news, **there are none**. The core of Endia is built [purely on top of Mojo and MAX](#why-another-ml-framework)!* -->
+  ```shell
+  magic project channel add "https://repo.prefix.dev/modular-community"
+  magic add endia
+  ```
 
 
 
