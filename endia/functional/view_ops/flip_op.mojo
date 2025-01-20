@@ -56,29 +56,40 @@ struct Flip():
             if dim < 0:
                 dims[i] = rank + dim
 
-        # execute
+        # be aware to use the proper strides and the offsets when loading data from arg manually, here we use the load fucntion which does htis autoamtically
+
+        # execute flip
         if rank == 1:
             for i in range(shape[0]):
                 curr.store(i, arg.load(shape[0] - i - 1))
 
         elif rank == 2:
             for i in range(shape[0]):
-                var i_idx = shape[0] - i - 1 if 0 in dims else i
+                var i_idx_arg = (shape[0] - i - 1)  * shape[1] if 0 in dims else i  * shape[1]
+                var i_idx_curr = i * shape[1]
 
                 for j in range(shape[1]):
                     var j_idx = shape[1] - j - 1 if 1 in dims else j
-                    curr.store(i * shape[1] + j, arg.load(i_idx * shape[1] + j_idx))
+
+                    curr.store(i_idx_curr + j, arg.load(i_idx_arg + j_idx))
 
         elif rank == 3:
             for i in range(shape[0]):
-                var i_idx = shape[0] - i - 1 if 0 in dims else i
+                var i_idx_arg = (shape[0] - i - 1) * shape[1] * shape[2] if 0 in dims else i * shape[1] * shape[2]
+                var i_idx_curr = i * shape[1] * shape[2]
 
                 for j in range(shape[1]):
-                    var j_idx = shape[1] - j - 1 if 1 in dims else j
+                    var j_idx_arg = (shape[1] - j - 1) * shape[2] if 1 in dims else j * shape[2]
+                    var j_idx_curr = j * shape[2]
 
                     for k in range(shape[2]):
                         var k_idx = shape[2] - k - 1 if 2 in dims else k
-                        curr.store(i * shape[1] * shape[2] + j * shape[2] + k, arg.load(i_idx * shape[1] * shape[2] + j_idx * shape[2] + k_idx))
+
+                        curr.store(i_idx_curr + j_idx_curr + k, arg.load(i_idx_arg + j_idx_arg + k_idx))
+
+        else: 
+            raise "Error: Flip currently only supports 1D, 2D and 3D arrays."
+
 
     @staticmethod
     fn jvp(primals: List[Array], tangents: List[Array]) raises -> Array:

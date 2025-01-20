@@ -4,6 +4,6 @@ from examples.run_examples import run_examples
 
 def main():
 
-    run_examples()
+    # run_examples()
     run_tests()
-    run_benchmarks()
+    # run_benchmarks()
