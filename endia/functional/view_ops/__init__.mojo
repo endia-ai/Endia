@@ -15,6 +15,7 @@ from .array_slice_op import array_slice
 from .as_strided_op import as_strided
 from .detach_op import detach
 from .expand_op import expand, expand_as, broadcast_to
+from .flip_op import flip
 from .imag_op import imag
 from .pad_op import pad
 from .permute_op import permute, swapaxes, swapdims, transpose

@@ -32,10 +32,11 @@ fn jacrev(arg: Array, create_graph: Bool) raises:
     top_order_rec(out, trace)
 
     var dims = arg.shape()[arg.ndim() - 1]
-    var last_grad = reshape(eye(out.size()), out.shape() + out.shape()) if (
-        out.ndim() != 1 or dims != 1
-    ) else ones(dims)
-    out.grad_(last_grad)
+    if not out.has_grad():
+        var last_grad = reshape(eye(out.size()), out.shape() + out.shape()) if (
+            out.ndim() != 1 or dims != 1
+        ) else ones(dims)
+        out.grad_(last_grad)
 
     for i in range(len(trace) - 1, -1, -1):
         var curr = trace[i]
@@ -74,9 +75,9 @@ fn grad(
     create_graph: Bool = False,
 ) raises -> List[Array]:
     """Computes gradients of outputs with respect to inputs."""
-    for i in range(len(outs)):
-        var out = outs[i]
-        remove_grad_rec(out)
+    # for i in range(len(outs)):
+    #     var out = outs[i]
+    #     remove_grad_rec(out)
     for i in range(len(inputs)):
         var input = inputs[i]
         remove_grad_rec(input)
