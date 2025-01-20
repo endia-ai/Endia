@@ -24,13 +24,13 @@ from endia.functional import cos
 struct ASin(DifferentiableUnaryOp):
     @staticmethod
     fn fwd(arg0: Array) raises -> Array:
-        """Computes the ArcPointersine of the input array element-wise.
+        """Computes the arcsine of the input array element-wise.
 
         Args:
             arg0: The input array.
 
         Returns:
-            An array containing the ArcPointersine of each element in the input array.
+            An array containing the arcsine of each element in the input array.
 
         #### Examples:
         ```python
@@ -45,32 +45,32 @@ struct ASin(DifferentiableUnaryOp):
         - Complex valued arguments.
         """
         if arg0.is_complex():
-            raise "FIX: Complex numbers are not supported for the ArcPointersine function yet."
+            raise "FIX: Complex numbers are not supported for the arcsine function yet."
         return unary_op_array(
             arg0, "asin", ASin.__call__, ASin.jvp, ASin.vjp, ASin.unary_simd_op
         )
 
     @staticmethod
     fn jvp(primals: List[Array], tangents: List[Array]) raises -> Array:
-        """Computes the Jacobian-vector product for the ArcPointersine function.
+        """Computes the Jacobian-vector product for the arcsine function.
 
-        Implements forward-mode automatic differentiation for the ArcPointersine function.
+        Implements forward-mode automatic differentiation for the arcsine function.
 
         Args:
             primals: A list containing the primal input array.
             tangents: A list containing the tangent vector.
 
         Returns:
-            The Jacobian-vector product for the ArcPointersine function.
+            The Jacobian-vector product for the arcsine function.
 
         """
         return 1 / cos(primals[0]) * tangents[0]
 
     @staticmethod
     fn vjp(primals: List[Array], grad: Array, out: Array) raises -> List[Array]:
-        """Computes the vector-Jacobian product for the ArcPointersine function.
+        """Computes the vector-Jacobian product for the arcsine function.
 
-        Implements reverse-mode automatic differentiation for the ArcPointersine function.
+        Implements reverse-mode automatic differentiation for the arcsine function.
 
         Args:
             primals: A list containing the primal input array.
@@ -91,14 +91,14 @@ struct ASin(DifferentiableUnaryOp):
         SIMD[dtype, nelts[dtype]() * 2 // 2],
     ]:
         """
-        Low-level function to compute the ArcPointersine of a complex number represented as SIMD vectors.
+        Low-level function to compute the arcsine of a complex number represented as SIMD vectors.
 
         Args:
             arg0_real: The real part of the complex number.
             arg0_imag: The imaginary part of the complex number.
 
         Returns:
-            The real and imaginary parts of the ArcPointersine of the complex number as a tuple.
+            The real and imaginary parts of the arcsine of the complex number as a tuple.
         """
         var real = math.asin(arg0_real) * math.cosh(arg0_imag)
         var imag = -math.acos(arg0_real) * math.sinh(arg0_imag)
@@ -106,9 +106,9 @@ struct ASin(DifferentiableUnaryOp):
 
     @staticmethod
     fn __call__(inout curr: Array, args: List[Array]) raises:
-        """Performs the forward pass for element-wise ArcPointersine computation of an array.
+        """Performs the forward pass for element-wise arcsine computation of an array.
 
-        Computes the ArcPointersine of each element in the input array and stores the result in the current array.
+        Computes the arcsine of each element in the input array and stores the result in the current array.
         Initializes the current array if not already set up.
 
         Args:
@@ -124,13 +124,13 @@ struct ASin(DifferentiableUnaryOp):
 
 
 fn asin(arg0: Array) raises -> Array:
-    """Computes the ArcPointersine of the input array element-wise.
+    """Computes the arcsine of the input array element-wise.
 
     Args:
         arg0: The input array.
 
     Returns:
-        An array containing the ArcPointersine of each element in the input array.
+        An array containing the arcsine of each element in the input array.
 
     #### Examples:
     ```python
