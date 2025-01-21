@@ -24,4 +24,3 @@ from .test_unsqueeze_op import *
 from .test_view_as_imag_op import *
 from .test_view_as_real_op import *
 from .test_view_op import *
-from .test_flip_op import *

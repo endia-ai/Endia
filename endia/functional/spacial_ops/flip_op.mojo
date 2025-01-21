@@ -26,7 +26,6 @@ from endia.functional._utils import (
     op_array,
     setup_shape_and_data,
 )
-from ._utils import DifferentiableViewOp
 from endia.functional import reduce_add
 
 ####--------------------------------------------------------------------------------------------------------------------####

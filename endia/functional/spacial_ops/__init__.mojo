@@ -20,3 +20,4 @@ from .max_pool3d_op import max_pool3d
 from .avg_pool1d_op import avg_pool1d
 from .avg_pool2d_op import avg_pool2d
 from .avg_pool3d_op import avg_pool3d
+from .flip_op import flip

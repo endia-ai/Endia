@@ -20,3 +20,4 @@ from .test_conv3d_op import *
 from .test_max_pool1d_op import *
 from .test_max_pool2d_op import *
 from .test_max_pool3d_op import *
+from .test_flip_op import *
