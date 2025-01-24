@@ -11,7 +11,9 @@
 # limitations under the License.
 # ===----------------------------------------------------------------------=== #
 
-from ._array import *
+from .array_and_node.array import *
+from .array_and_node.utils import *
+from .array_and_node.node import *
 from .functional import *
 from .compile import *
 from .autograd import *

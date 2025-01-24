@@ -6,4 +6,4 @@ def main():
 
     # run_examples()
     run_tests()
-    # run_benchmarks()
+    run_benchmarks()

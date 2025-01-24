@@ -11,4 +11,21 @@
 # limitations under the License.
 # ===----------------------------------------------------------------------=== #
 
-from ._array import *
+from .array import *
+
+
+fn default_fwd(inout curr: Array, args: List[Array]) raises -> None:
+    print("Attention: Default fwd is being used!")
+    pass
+
+
+fn default_vjp(
+    primals: List[Array], grad: Array, out: Array
+) raises -> List[Array]:
+    print("Attention: Default vjp is being used!")
+    return grad
+
+
+fn default_jvp(primals: List[Array], tangents: List[Array]) raises -> Array:
+    print("Attention: Default jvp is being used!")
+    return tangents[0]
