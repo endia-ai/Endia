@@ -439,7 +439,7 @@ struct FxGraph:
         self.postponed_outputs = List[Int]()
         self.compile_with_MAX = compile_with_MAX
 
-    fn op_arrayeration(inout self, inout arr: Array) raises:
+    fn op_array(inout self, inout arr: Array) raises:
         if arr.id() == -2:
             raise "Error: This is a test error."
         var name = arr.name()
@@ -467,11 +467,11 @@ struct FxGraph:
                         registered_op.array_in_graph,
                     )
                     self.curr_idx = len(self.trace)
-                    self.op_arrayeration(arr)
+                    self.op_array(arr)
                 else:
                     # print("     jumping to registered alternative operation", arr.name())
                     self.curr_idx = registered_op.branch_to_idx
-                    self.op_arrayeration(arr)
+                    self.op_array(arr)
         # print("->",name, arr.id_in_graph(), arr.has_fxgraph(), self.curr_idx, len(self.trace))
 
     fn reset_data_and_shapes_to_uncomputed(inout self) raises:

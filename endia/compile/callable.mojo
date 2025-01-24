@@ -66,7 +66,7 @@ struct Callable(CollectionElement):
                 for _ in range(len(args)):
                     var arg = Array(List[Int](0))
                     arg.requires_grad_(True)
-                    captured_graph[].op_arrayeration(arg)
+                    captured_graph[].op_array(arg)
                     captured_graph[].trace[-1].is_breakpoint = True
                     arg.graph_(captured_graph)
                     var cached_args = self.args

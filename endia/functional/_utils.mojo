@@ -272,7 +272,7 @@ fn op_array(
         if arg[].has_fxgraph():
             # print("Do: registering operation", res_arr.name())
             var graph = arg[].graph()
-            graph[].op_arrayeration(res_arr)
+            graph[].op_array(res_arr)
             res_arr.graph_(graph)
 
             # var arr_shape = res_arr.graph_dual().array_shape()
