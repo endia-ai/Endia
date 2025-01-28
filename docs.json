@@ -20095,6 +20095,36 @@
               {
                 "aliases": [],
                 "description": "",
+                "functions": [],
+                "kind": "module",
+                "name": "conv_transpose1d",
+                "structs": [],
+                "summary": "",
+                "traits": []
+              },
+              {
+                "aliases": [],
+                "description": "",
+                "functions": [],
+                "kind": "module",
+                "name": "conv_transpose2d",
+                "structs": [],
+                "summary": "",
+                "traits": []
+              },
+              {
+                "aliases": [],
+                "description": "",
+                "functions": [],
+                "kind": "module",
+                "name": "conv_transpose3d",
+                "structs": [],
+                "summary": "",
+                "traits": []
+              },
+              {
+                "aliases": [],
+                "description": "",
                 "functions": [
                   {
                     "kind": "function",
@@ -31413,6 +31443,263 @@
                 "kind": "module",
                 "name": "__init__",
                 "structs": [],
+                "summary": "",
+                "traits": []
+              },
+              {
+                "aliases": [],
+                "description": "",
+                "functions": [
+                  {
+                    "kind": "function",
+                    "name": "mlp",
+                    "overloads": [
+                      {
+                        "args": [
+                          {
+                            "convention": "read",
+                            "description": "",
+                            "kind": "argument",
+                            "name": "args",
+                            "passingKind": "pos_or_kw",
+                            "type": "List[Array]"
+                          }
+                        ],
+                        "async": false,
+                        "constraints": "",
+                        "deprecated": "",
+                        "description": "",
+                        "isDef": false,
+                        "isStatic": false,
+                        "kind": "function",
+                        "name": "mlp",
+                        "parameters": [],
+                        "raises": true,
+                        "raisesDoc": "",
+                        "returnType": "Array",
+                        "returnsDoc": "",
+                        "signature": "mlp(args: List[Array]) -> Array",
+                        "summary": ""
+                      }
+                    ]
+                  }
+                ],
+                "kind": "module",
+                "name": "mlp",
+                "structs": [
+                  {
+                    "aliases": [],
+                    "constraints": "",
+                    "convention": "memory_only",
+                    "deprecated": "",
+                    "description": "",
+                    "fields": [
+                      {
+                        "description": "",
+                        "kind": "field",
+                        "name": "weights",
+                        "summary": "",
+                        "type": "List[Array]"
+                      },
+                      {
+                        "description": "",
+                        "kind": "field",
+                        "name": "biases",
+                        "summary": "",
+                        "type": "List[Array]"
+                      },
+                      {
+                        "description": "",
+                        "kind": "field",
+                        "name": "hidden_dims",
+                        "summary": "",
+                        "type": "List[Int]"
+                      },
+                      {
+                        "description": "",
+                        "kind": "field",
+                        "name": "num_layers",
+                        "summary": "",
+                        "type": "Int"
+                      },
+                      {
+                        "description": "",
+                        "kind": "field",
+                        "name": "compute_backward",
+                        "summary": "",
+                        "type": "Bool"
+                      }
+                    ],
+                    "functions": [
+                      {
+                        "kind": "function",
+                        "name": "__init__",
+                        "overloads": [
+                          {
+                            "args": [
+                              {
+                                "convention": "out",
+                                "description": "",
+                                "kind": "argument",
+                                "name": "self",
+                                "passingKind": "pos_or_kw",
+                                "type": "Self"
+                              },
+                              {
+                                "convention": "read",
+                                "description": "",
+                                "kind": "argument",
+                                "name": "hidden_dims",
+                                "passingKind": "pos_or_kw",
+                                "type": "List[Int]"
+                              },
+                              {
+                                "convention": "read",
+                                "default": "False",
+                                "description": "",
+                                "kind": "argument",
+                                "name": "compute_backward",
+                                "passingKind": "pos_or_kw",
+                                "type": "Bool"
+                              }
+                            ],
+                            "async": false,
+                            "constraints": "",
+                            "deprecated": "",
+                            "description": "",
+                            "isDef": false,
+                            "isStatic": false,
+                            "kind": "function",
+                            "name": "__init__",
+                            "parameters": [],
+                            "raises": true,
+                            "raisesDoc": "",
+                            "returnType": null,
+                            "returnsDoc": "",
+                            "signature": "__init__(out self, hidden_dims: List[Int], compute_backward: Bool = False)",
+                            "summary": ""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "function",
+                        "name": "forward",
+                        "overloads": [
+                          {
+                            "args": [
+                              {
+                                "convention": "read",
+                                "description": "",
+                                "kind": "argument",
+                                "name": "self",
+                                "passingKind": "pos_or_kw",
+                                "type": "Self"
+                              },
+                              {
+                                "convention": "read",
+                                "description": "",
+                                "kind": "argument",
+                                "name": "x",
+                                "passingKind": "pos_or_kw",
+                                "type": "Array"
+                              }
+                            ],
+                            "async": false,
+                            "constraints": "",
+                            "deprecated": "",
+                            "description": "",
+                            "isDef": false,
+                            "isStatic": false,
+                            "kind": "function",
+                            "name": "forward",
+                            "parameters": [],
+                            "raises": true,
+                            "raisesDoc": "",
+                            "returnType": "Array",
+                            "returnsDoc": "",
+                            "signature": "forward(self, x: Array) -> Array",
+                            "summary": ""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "function",
+                        "name": "params",
+                        "overloads": [
+                          {
+                            "args": [
+                              {
+                                "convention": "read",
+                                "description": "",
+                                "kind": "argument",
+                                "name": "self",
+                                "passingKind": "pos_or_kw",
+                                "type": "Self"
+                              }
+                            ],
+                            "async": false,
+                            "constraints": "",
+                            "deprecated": "",
+                            "description": "",
+                            "isDef": false,
+                            "isStatic": false,
+                            "kind": "function",
+                            "name": "params",
+                            "parameters": [],
+                            "raises": true,
+                            "raisesDoc": "",
+                            "returnType": "List[Array]",
+                            "returnsDoc": "",
+                            "signature": "params(self) -> List[Array]",
+                            "summary": ""
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "function",
+                        "name": "__str__",
+                        "overloads": [
+                          {
+                            "args": [
+                              {
+                                "convention": "read",
+                                "description": "",
+                                "kind": "argument",
+                                "name": "self",
+                                "passingKind": "pos_or_kw",
+                                "type": "Self"
+                              }
+                            ],
+                            "async": false,
+                            "constraints": "",
+                            "deprecated": "",
+                            "description": "",
+                            "isDef": false,
+                            "isStatic": false,
+                            "kind": "function",
+                            "name": "__str__",
+                            "parameters": [],
+                            "raises": true,
+                            "raisesDoc": "",
+                            "returnType": "String",
+                            "returnsDoc": "",
+                            "signature": "__str__(self) -> String",
+                            "summary": ""
+                          }
+                        ]
+                      }
+                    ],
+                    "kind": "struct",
+                    "name": "MLP",
+                    "parameters": [],
+                    "parentTraits": [
+                      "AnyType",
+                      "StringableRaising",
+                      "UnknownDestructibility"
+                    ],
+                    "summary": ""
+                  }
+                ],
                 "summary": "",
                 "traits": []
               }
