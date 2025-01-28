@@ -1,8 +1,8 @@
 # Welcome to Endia 24.6
 
-**Endia** is a dynamic Machine Learning Library, featuring:
+**Endia** is a Machine Learning Framework written in pure Mojo, featuring:
 
-- **Algorithmic Differentiation**: Compute derivatives of arbitrary order for training Neural Networks and beyond.
+- **AD**: Compute derivatives of arbitrary order for training Neural Networks and beyond.
 - **Signal Processing:** Complex Numbers, Fourier Transforms, Convolution, and more.
 - **JIT Compilation:** Leverage the [MAX Engine](https://www.modular.com/) to speed up your code.
 - **Dual API:** Choose between a PyTorch-like imperative or a JAX-like functional interface.
@@ -141,23 +141,6 @@ Guided by this core belief, we embarked on a challenging journey to build someth
 ## Contributing
 
 Contributions to Endia are welcome! If you'd like to contribute, please follow the contribution guidelines in the [CONTRIBUTING.md](https://github.com/endia-ai/Endia/blob/main/CONTRIBUTING.md) file in the repository.
-
-## Citation
-
-If you use Endia in your research or project, please cite it as follows:
-
-```bibtex
-@software{Fehrenbach_Endia_2025,
-  author = {Fehrenbach, Tillmann},
-  license = {Apache-2.0 with LLVM Exceptions},
-  doi = {10.5281/zenodo.12810766},
-  month = {01},
-  title = {{Endia}},
-  url = {https://github.com/endia-ai/Endia},
-  version = {24.6.0},
-  year = {2025}
-}
-```
 
 ## License
 
