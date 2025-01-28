@@ -7,17 +7,7 @@
 - **JIT Compilation:** Leverage the [MAX Engine](https://www.modular.com/) to speed up your code.
 - **Dual API:** Choose between a PyTorch-like imperative or a JAX-like functional interface.
 
-<!-- <div align="center">
-  
-  [Website] | [Docs] | [Getting Started]
-
-  [Website]: https://endia.vercel.app/
-  [Docs]: https://endia.vercel.app/docs/array
-  [Getting Started]: https://endia.vercel.app/docs/get_started
-
-</div> -->
-
-Checkout the [Endia documentation](https://endia.vercel.app/docs/array) for more information.
+Checkout the [Endia documentation](https://endia.vercel) for more information.
 
 ## Usage
 
@@ -126,17 +116,7 @@ def main():
     print(foo_hes(x)[ndarray]) # [[2.0, 0.0, 0.0], [0.0, 2.0, 0.0], [0.0, 0.0, 2.0]]
 ```
 
-*And there is so much more! Endia can handle complex valued functions, can perform both forward and reverse-mode automatic differentiation, it even has a builtin JIT compiler to make things go brrr. Explore the full **list of features** in the [documentation](https://endia.vercel.app/docs/array).*
-<!-- 
-## Why another ML framework?
-
-*"Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less."* - Marie Curie
-
-Guided by this core belief, we embarked on a challenging journey to build something from first principles — a framework that is both powerful 🚀 and transparent 📐. Endia is crafted to be more than just a tool; it's a window into the algorithms you work with, stripping away layers of abstraction to reveal the underlying logic 🧠. In contrast to other popular Scientific Computing libraries which are built on piles of decades-old legacy Fortran and C++ code (like NumPy, for example), Endia is built on top of a uniquely minimalistic stack: -->
-
-<!-- <div align="center" style="max-width: 600px; margin: auto;">
-  <img src="./assets/endia_stack_concept.png" alt="Endia Stack concept Image" style="max-width: 100%;" />
-</div> -->
+*And there is so much more! Endia can handle complex valued functions, can perform both forward and reverse-mode automatic differentiation, it even has a builtin JIT compiler to make things go brrr. Explore the full **list of features** in the [documentation](https://endia.vercel).*
 
 ## Contributing
 
